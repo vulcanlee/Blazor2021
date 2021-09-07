@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace bz01.Pages
@@ -13,7 +14,7 @@ namespace bz01.Pages
         /// <param name="__builder"></param>
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
         {
-            Console.WriteLine($"BuildRenderTree {DateTime.Now}{"\r\n"}");
+            Console.WriteLine($"BuildRenderTree {DateTime.Now}");
             __builder.AddMarkupContent(0, "<h3>Counter - 使用 C# 來設計元件</h3>\r\n\r\n");
             __builder.OpenElement(1, "p");
             __builder.AddContent(2, "Current count: ");
@@ -41,20 +42,44 @@ namespace bz01.Pages
 
         private void IncrementCount()
         {
-            Console.WriteLine($"IncrementCount {DateTime.Now}{"\r\n"}");
+            Console.WriteLine($"IncrementCount {DateTime.Now}");
             currentCount++;
+            StateHasChanged();
+            StateHasChanged();
+            StateHasChanged();
+            StateHasChanged();
         }
 
         private async Task OnlyTesting()
         {
             currentCount--;
+            #region 檢查執行緒同步內容是否存在
+            var sc = SynchronizationContext.Current == null ? "無 SC" : "有SC";
+            Console.WriteLine($"Thread Id:{Thread.CurrentThread.ManagedThreadId} {sc}");
+            #endregion
+
             Console.WriteLine($"OnlyTesting before await 1 {DateTime.Now}");
-            await Task.Delay(100);
-            Console.WriteLine($"OnlyTesting after await 1 {DateTime.Now}{"\r\n"}");
+            await Task.Delay(100).ConfigureAwait(false);
+            Console.WriteLine($"OnlyTesting after await 1 {DateTime.Now}");
+            currentCount--;
+
+            #region 檢查執行緒同步內容是否存在
+            sc = SynchronizationContext.Current == null ? "無 SC" : "有SC";
+            Console.WriteLine($"Thread Id:{Thread.CurrentThread.ManagedThreadId} {sc}");
+            #endregion
+
             Console.WriteLine($"OnlyTesting before await 2 {DateTime.Now}");
             await Task.Delay(100);
+
+            #region 檢查執行緒同步內容是否存在
+            sc = SynchronizationContext.Current == null ? "無 SC" : "有SC";
+            Console.WriteLine($"Thread Id:{Thread.CurrentThread.ManagedThreadId} {sc}");
+            #endregion
+
             currentCount--;
-            Console.WriteLine($"OnlyTesting after await 2 {DateTime.Now}{"\r\n"}");
+            Console.WriteLine($"OnlyTesting after await 2 {DateTime.Now}");
+            currentCount--;
+            StateHasChanged();
         }
         protected override bool ShouldRender()
         {
