@@ -1,0 +1,28 @@
+﻿@page "/Bz01E"
+
+<h1>Counter</h1>
+
+<p>Current count: @currentCount</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+
+@code {
+    private int currentCount = 0;
+
+    private void IncrementCount()
+    {
+        Console.WriteLine($"觸發按鈕事件 IncrementCount");
+        currentCount++;
+        Console.WriteLine($"第 1 次呼叫 StateHasChanged");
+        StateHasChanged();
+        currentCount++;
+        Console.WriteLine($"第 2 次呼叫 StateHasChanged");
+        StateHasChanged();
+        currentCount++;
+        Console.WriteLine($"第 3 次呼叫 StateHasChanged");
+        StateHasChanged();
+        currentCount++;
+        Console.WriteLine($"第 4 次呼叫 StateHasChanged");
+        StateHasChanged();
+    }
+}
