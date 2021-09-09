@@ -1,0 +1,28 @@
+﻿<div class="bg-primary m-3 ml-5 p-2">
+    <h3>內層元件</h3>
+    <div>@InnerMessage</div>
+    <div>@InnerObject.MyInt</div>
+    <div>@InnerObject.MyString</div>
+    <div>@InnerObject.MyDatetime</div>
+</div>
+
+@code {
+    [Parameter]
+    public string InnerMessage { get; set; }
+    [Parameter]
+    public ClassArgument InnerObject { get; set; }
+
+    public override Task SetParametersAsync(ParameterView parameters)
+    {
+        foreach (var item in parameters)
+        {
+            Console.WriteLine($"SetParametersAsync 接收到參數 {item.Name} - {item.Value}");
+        }
+        return base.SetParametersAsync(parameters);
+    }
+    protected override void OnParametersSet()
+    {
+        Console.WriteLine($"OnParametersSet 被呼叫");
+        base.OnParametersSet();
+    }
+}

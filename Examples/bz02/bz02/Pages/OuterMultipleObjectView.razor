@@ -1,0 +1,27 @@
+﻿<div class="bg-warning p-2">
+    <h3>外層元件</h3>
+    <div><input @bind="Input1" /></div>
+    <div><input @bind="Input2" /></div>
+    <div><input @bind="Input3" /></div>
+    <div>@outerMessage</div>
+    <div><button @onclick="OnBtnClick">變更元件引數</button>
+    <button @onclick="()=> { }">沒有任何動作</button></div>
+    <InnerMultipleObject InnerMessage="@outerMessage"
+                         InnerObject="ClassArgument" />
+</div>
+
+@code {
+    public string Input1 { get; set; }
+    public int Input2 { get; set; }
+    public string Input3 { get; set; }
+    string outerMessage = "";
+    public ClassArgument ClassArgument { get; set; } = new ClassArgument();
+
+    void OnBtnClick()
+    {
+        outerMessage = Input1;
+        ClassArgument.MyInt = Input2;
+        ClassArgument.MyString = Input3;
+        ClassArgument.MyDatetime = DateTime.Now.AddDays(ClassArgument.MyInt);
+    }
+}

@@ -1,0 +1,10 @@
+﻿<div class="bg-warning p-2">
+    <h3>外層元件</h3>
+    <div><input @bind="outerMessage"/></div>
+    <div>@outerMessage</div>
+    <InnerView InnerMessage="@outerMessage" />
+</div>
+
+@code {
+    string outerMessage = "";
+}
