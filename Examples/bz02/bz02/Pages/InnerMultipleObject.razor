@@ -4,6 +4,7 @@
     <div>@InnerObject.MyInt</div>
     <div>@InnerObject.MyString</div>
     <div>@InnerObject.MyDatetime</div>
+    <div><button @onclick="OnRest">重設參數</button></div>
 </div>
 
 @code {
@@ -24,5 +25,10 @@
     {
         Console.WriteLine($"OnParametersSet 被呼叫");
         base.OnParametersSet();
+    }
+    void OnRest()
+    {
+        InnerObject.MyInt = 10;
+        InnerObject.MyString = "Reset";
     }
 }
