@@ -1,0 +1,42 @@
+﻿@page "/Bz04B"
+
+<h1>Counter</h1>
+
+<p>Current count: @Bz04BParameter.currentCount</p>
+
+<div>
+    <button class="btn btn-primary m-3" @onclick="IncrementCount">Click me</button>
+    <button class="btn btn-primary" @onclick="Empty">Empty</button>
+    <button class="btn btn-success" @onclick="NewObject">New Object</button>
+    <button class="btn btn-danger" @onclick="ChangeNow">Change Now</button>
+</div>
+<br />
+<Bz04BComponent Bz04BParameter="Bz04BParameter" />
+
+@code {
+    Bz04BParameter Bz04BParameter = new Bz04BParameter();
+    private void IncrementCount()
+    {
+        Console.WriteLine($"父元件 觸發按鈕事件 IncrementCount");
+        Bz04BParameter.currentCount++;
+    }
+    void Empty()
+    {
+        Console.WriteLine($"父元件 觸發按鈕事件 Empty");
+    }
+    void NewObject()
+    {
+        Console.WriteLine($"父元件 觸發按鈕事件 NewObject");
+        Bz04BParameter = new Bz04BParameter();
+    }
+    void ChangeNow()
+    {
+        Console.WriteLine($"父元件 觸發按鈕事件 ChangeNow");
+        Bz04BParameter.Now = DateTime.Now;
+    }
+    protected override bool ShouldRender()
+    {
+        Console.WriteLine($"父元件 執行 ShouldRender");
+        return base.ShouldRender();
+    }
+}

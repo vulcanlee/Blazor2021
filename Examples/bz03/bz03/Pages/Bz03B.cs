@@ -52,6 +52,8 @@ namespace bz03.Pages
                 Console.WriteLine($"{scMsg}");
                 currentCount++;
                 StateHasChanged();
+                currentCount++;
+                StateHasChanged();
             });
         }
         protected override bool ShouldRender()
