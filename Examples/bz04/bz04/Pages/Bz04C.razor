@@ -1,0 +1,58 @@
+﻿@page "/Bz04C"
+
+<h1>Counter</h1>
+
+<p>Current count: @currentCount</p>
+
+<div>
+    <button class="btn btn-primary m-3" @onclick="IncrementCount">Click me</button>
+    <button class="btn btn-primary m-3" @onclick="IncrementCountBeforeAsync">Click me Before</button>
+    <button class="btn btn-primary m-3" @onclick="IncrementCountAfterAsync">Click me After</button>
+    <button class="btn btn-primary m-3" @onclick="IncrementCountBothAsync">Click me Both</button>
+    <button class="btn btn-primary" @onclick="Empty">Empty</button>
+</div>
+<br />
+<Bz04AComponent currentCount="currentCount" />
+
+@code {
+    private int currentCount = 0;
+    private async Task IncrementCountBeforeAsync()
+    {
+        Console.WriteLine($"父元件 觸發按鈕事件 IncrementCountBeforeAsync");
+        currentCount++;
+        await Task.Delay(500);
+        currentCount++;
+        await Task.Delay(500);
+    }
+    private async Task IncrementCountAfterAsync()
+    {
+        Console.WriteLine($"父元件 觸發按鈕事件 IncrementCountAfterAsync");
+        await Task.Delay(500);
+        currentCount++;
+        await Task.Delay(500);
+        currentCount++;
+    }
+    private async Task IncrementCountBothAsync()
+    {
+        Console.WriteLine($"父元件 觸發按鈕事件 IncrementCountBothAsync");
+        currentCount++;
+        await Task.Delay(500);
+        currentCount++;
+        await Task.Delay(500);
+        currentCount++;
+    }
+    private void IncrementCount()
+    {
+        Console.WriteLine($"父元件 觸發按鈕事件 IncrementCount");
+        currentCount++;
+    }
+    void Empty()
+    {
+        Console.WriteLine($"父元件 觸發按鈕事件 Empty");
+    }
+    protected override bool ShouldRender()
+    {
+        Console.WriteLine($"父元件 執行 ShouldRender");
+        return base.ShouldRender();
+    }
+}
